@@ -1,0 +1,71 @@
+---
+# 👋 Welcome to {{Your Name}}’s Digital Home
+layout: home
+title: "{{Your Name}} – {{Your Tagline}}"
+description: "{{Your Name}} – {{Your 1-sentence value prop}}"
+---
+
+![Hero Banner](./assets/hero.jpg)  
+*Photo by [Unsplash](https://unsplash.com)*
+
+---
+
+## 🚀 About Me
+&gt; {{A punchy 2-sentence bio}}  
+&gt; I turn coffee into {{your_output}} and love shipping projects that {{benefit}}.
+
+---
+
+## 🛠️ What I Do
+| Service | Stack | Result |
+|---------|-------|--------|
+| **Web Apps** | React, Next.js, Tailwind | ⚡ 90+ Lighthouse score |
+| **APIs** | Node, Go, Postgres | 🔒 99.9 % uptime |
+| **AI Tools** | Python, OpenAI, LangChain | 🧠 10× faster workflows |
+
+---
+
+## 🌟 Spotlight Projects
+1. **[Project Alpha](https://github.com/you/alpha)** – One-liner value prop.  
+   `Next.js` `Prisma` `Vercel`
+2. **[Project Beta](https://github.com/you/beta)** – One-liner value prop.  
+   `SvelteKit` `Deno` `Railway`
+3. **[Project Gamma](https://github.com/you/gamma)** – One-liner value prop.  
+   `Flutter` `Firebase` `GCP`
+
+---
+
+## 📊 GitHub Snake
+![GitHub Snake](https://raw.githubusercontent.com/{{USERNAME}}/{{USERNAME}}/output/github-contribution-grid-snake.svg)
+
+---
+
+## 📬 Let’s Connect
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/{{USERNAME}})  
+[![Twitter](https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/{{USERNAME}})  
+[![Email](https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:{{you}}@{{domain}}.com)
+
+---
+
+## 🗞️ Latest Posts
+&lt;!-- automatically replaced by GitHub Actions if you keep a `_posts` folder --&gt;
+- [How I shaved 200 kB from my bundle](./blog/shave-bundle) – 02 Oct 2025
+- [Deploying a serverless GraphQL API in 5 min](./blog/deploy-gql) – 28 Sep 2025
+
+---
+
+## 🧩 Fun Facts
+- 🌍 Visited **{{X}}** countries and counting  
+- 🎧 Currently looping **{{Your Favorite Album}}**  
+- ⌨️ 120 WPM on [Monkeytype](https://monkeytype.com)
+
+---
+
+### 🛠️ DIY Deploy Cheatsheet
+1. Fork [this repo](https://github.com/{{USERNAME}}/{{USERNAME}})  
+2. Enable **GitHub Pages** → source: `Deploy from branch` → `main` → `/ (root)`  
+3. Edit `index.md`, commit, push → live at `https://{{USERNAME}}.github.io` in 30 s.
+
+---
+
+&gt; “Move fast and **ship things that matter.**” – {{Your Name}}
