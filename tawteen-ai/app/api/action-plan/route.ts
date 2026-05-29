@@ -20,7 +20,7 @@ Current Emiratis: ${profile.currentEmiratis}
 Required Emiratis: ${status.requiredEmiratis}
 Compliance Gap: ${status.gap} positions
 Annual Penalty if Not Fixed: AED ${projection.annualPenalty.toLocaleString()}
-Available Nafis Subsidy: AED ${projection.nafisSubsidy.toLocaleString()}/year
+Nafis Govt. Top-Up (paid directly to Emirati employee by government): AED ${projection.nafisSubsidy.toLocaleString()}/year — this reduces the salary gap and helps attract Emirati talent
 
 Generate a structured 90-day plan in English AND Arabic (provide English first, then Arabic translation of the plan). Include:
 1. Immediate actions (Days 1-7): MOHRE portal setup, Tasdeeq registration

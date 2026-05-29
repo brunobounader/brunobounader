@@ -214,16 +214,16 @@ export default function DashboardPage() {
               variant={projection.annualPenalty > 0 ? 'danger' : 'success'}
             />
 
-            {/* Nafis Subsidy */}
+            {/* Nafis Government Support */}
             <StatCard
-              title="Nafis Subsidy Opportunity"
-              titleAr="فرصة دعم نافس"
+              title="Nafis Govt. Top-Up to Your Hire"
+              titleAr="دعم نافس للموظف الإماراتي"
               value={status.gap > 0 ? formatAED(projection.nafisSubsidy) : 'AED 0'}
               subtitle={
                 status.gap > 0
-                  ? `${
+                  ? `Govt. pays your Emirati hire ${
                       profile.educationLevel === 'bachelor' ? 'AED 8,000' : 'AED 7,000'
-                    }/mo per hire × 12 months`
+                    }/mo directly`
                   : 'Already compliant'
               }
               icon={<TrendingUp className="w-5 h-5" />}
@@ -270,14 +270,14 @@ export default function DashboardPage() {
                 <p className="text-2xl font-bold text-amber-400/60">
                   {formatAED(projection.nafisSubsidy)}
                 </p>
-                <p className="text-xs text-gray-500 mt-1">Nafis subsidy if you hire now</p>
+                <p className="text-xs text-gray-500 mt-1">Govt. pays this to your Emirati hire directly</p>
               </div>
               <div>
                 <p className="text-2xl font-bold text-emerald-400">
                   {formatAED(projection.netCostToComply)}
                 </p>
                 <p className="text-xs text-gray-500 mt-1">
-                  Estimated net cost after Nafis subsidy
+                  Estimated hiring cost to achieve compliance
                 </p>
               </div>
             </div>
