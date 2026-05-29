@@ -128,19 +128,29 @@ export default function DeadlinesPage() {
                         </span>
                       )}
                     </div>
-                    <h3 className="text-white font-semibold">{dl.title}</h3>
-                    <p className="text-gray-400 text-sm mt-0.5" dir="rtl">
-                      {dl.titleAr}
-                    </p>
+                    <h3 className="text-white font-semibold text-base">{dl.title}</h3>
+                    <p className="text-gray-500 text-xs mt-0.5" dir="rtl">{dl.titleAr}</p>
                     <div className="flex items-center gap-1.5 mt-2 text-xs text-gray-500">
                       <Clock className="w-3 h-3" />
                       {dl.formatted}
+                    </div>
+                    <p className="text-gray-300 text-sm mt-3 leading-relaxed">{dl.description}</p>
+                    <div className="mt-3">
+                      <p className="text-xs font-semibold text-gray-400 mb-1.5">What to do:</p>
+                      <ul className="space-y-1">
+                        {dl.actions.map((action, i) => (
+                          <li key={i} className="flex items-start gap-2 text-xs text-gray-400">
+                            <span className="mt-0.5 flex-shrink-0 w-4 h-4 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[10px] text-gray-500">{i + 1}</span>
+                            {action}
+                          </li>
+                        ))}
+                      </ul>
                     </div>
                     <a
                       href={dl.sourceUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 mt-2 text-xs text-[#C9A84C]/60 hover:text-[#C9A84C] transition-colors"
+                      className="inline-flex items-center gap-1 mt-3 text-xs text-[#C9A84C]/60 hover:text-[#C9A84C] transition-colors"
                     >
                       <ExternalLink className="w-3 h-3" />
                       Official source: {dl.sourceLabel}
@@ -185,19 +195,29 @@ export default function DeadlinesPage() {
                         {catStyle.label.split(' | ')[0]}
                       </span>
                     </div>
-                    <h3 className="text-white font-semibold">{dl.title}</h3>
-                    <p className="text-gray-400 text-sm mt-0.5" dir="rtl">
-                      {dl.titleAr}
-                    </p>
+                    <h3 className="text-white font-semibold text-base">{dl.title}</h3>
+                    <p className="text-gray-500 text-xs mt-0.5" dir="rtl">{dl.titleAr}</p>
                     <div className="flex items-center gap-1.5 mt-2 text-xs text-gray-500">
                       <Clock className="w-3 h-3" />
                       {dl.formatted}
+                    </div>
+                    <p className="text-gray-300 text-sm mt-3 leading-relaxed">{dl.description}</p>
+                    <div className="mt-3">
+                      <p className="text-xs font-semibold text-gray-400 mb-1.5">What to do:</p>
+                      <ul className="space-y-1">
+                        {dl.actions.map((action, i) => (
+                          <li key={i} className="flex items-start gap-2 text-xs text-gray-400">
+                            <span className="mt-0.5 flex-shrink-0 w-4 h-4 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[10px] text-gray-500">{i + 1}</span>
+                            {action}
+                          </li>
+                        ))}
+                      </ul>
                     </div>
                     <a
                       href={dl.sourceUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 mt-2 text-xs text-[#C9A84C]/60 hover:text-[#C9A84C] transition-colors"
+                      className="inline-flex items-center gap-1 mt-3 text-xs text-[#C9A84C]/60 hover:text-[#C9A84C] transition-colors"
                     >
                       <ExternalLink className="w-3 h-3" />
                       Official source: {dl.sourceLabel}
