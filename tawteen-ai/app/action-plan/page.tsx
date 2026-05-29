@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Sparkles, ArrowLeft, RefreshCw, AlertCircle, Building2 } from 'lucide-react';
@@ -31,26 +31,23 @@ function renderMarkdown(text: string): string {
     .replace(/\n\n/g, '<br/><br/>');
 }
 
-// Read profile synchronously from localStorage to avoid setState-in-effect pattern
-function readProfileData(): {
+interface PageData {
   profile: CompanyProfile;
   status: ComplianceStatus;
   projection: PenaltyProjection;
-} | null {
+}
+
+function loadPageData(): PageData | null {
   if (typeof window === 'undefined') return null;
   const stored = localStorage.getItem('tawteen_profile');
   if (!stored) return null;
   const p: CompanyProfile = JSON.parse(stored);
-  return {
-    profile: p,
-    status: getComplianceStatus(p),
-    projection: getPenaltyProjection(p),
-  };
+  return { profile: p, status: getComplianceStatus(p), projection: getPenaltyProjection(p) };
 }
 
 export default function ActionPlanPage() {
   const router = useRouter();
-  const profileData = useRef(readProfileData());
+  const [pageData] = useState<PageData | null>(() => loadPageData());
   const [output, setOutput] = useState('');
   const [isStreaming, setIsStreaming] = useState(false);
   const [error, setError] = useState('');
@@ -58,10 +55,10 @@ export default function ActionPlanPage() {
   const outputRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!profileData.current) {
+    if (!pageData) {
       router.push('/');
     }
-  }, [router]);
+  }, [pageData, router]);
 
   useEffect(() => {
     if (outputRef.current && output) {
@@ -70,8 +67,8 @@ export default function ActionPlanPage() {
   }, [output]);
 
   const generatePlan = async () => {
-    if (!profileData.current) return;
-    const { profile, status, projection } = profileData.current;
+    if (!pageData) return;
+    const { profile, status, projection } = pageData;
 
     setIsStreaming(true);
     setOutput('');
@@ -109,9 +106,7 @@ export default function ActionPlanPage() {
     }
   };
 
-  const data = profileData.current;
-
-  if (!data) {
+  if (!pageData) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-gray-400">Loading...</div>
@@ -119,7 +114,7 @@ export default function ActionPlanPage() {
     );
   }
 
-  const { profile, status, projection } = data;
+  const { profile, status, projection } = pageData;
 
   return (
     <div className="min-h-screen bg-[#0A1628] px-4 py-8">

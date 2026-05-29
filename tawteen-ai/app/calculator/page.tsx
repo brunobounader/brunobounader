@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import {
@@ -29,7 +29,7 @@ interface ScenarioData {
   withHires: number;
 }
 
-function readProfile(): CompanyProfile | null {
+function loadProfile(): CompanyProfile | null {
   if (typeof window === 'undefined') return null;
   const stored = localStorage.getItem('tawteen_profile');
   if (!stored) return null;
@@ -38,7 +38,7 @@ function readProfile(): CompanyProfile | null {
 
 export default function CalculatorPage() {
   const router = useRouter();
-  const profileRef = useRef(readProfile());
+  const [profile] = useState<CompanyProfile | null>(() => loadProfile());
   const [additionalHires, setAdditionalHires] = useState(0);
   const [maxHires, setMaxHires] = useState(10);
   const [chartData, setChartData] = useState<ScenarioData[]>([]);
@@ -73,23 +73,20 @@ export default function CalculatorPage() {
   }, []);
 
   useEffect(() => {
-    const p = profileRef.current;
-    if (!p) {
+    if (!profile) {
       router.push('/');
       return;
     }
-    const status = getComplianceStatus(p);
+    const status = getComplianceStatus(profile);
     setMaxHires(Math.max(10, status.gap + 5));
-    recalculate(p, 0);
-  }, [router, recalculate]);
+    recalculate(profile, 0);
+  }, [profile, router, recalculate]);
 
   const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = parseInt(e.target.value, 10);
     setAdditionalHires(val);
-    if (profileRef.current) recalculate(profileRef.current, val);
+    if (profile) recalculate(profile, val);
   };
-
-  const profile = profileRef.current;
 
   if (!profile) {
     return (
