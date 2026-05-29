@@ -41,6 +41,8 @@ export const KEY_DEADLINES = [
     titleAr: 'تدقيق التصديق للتوطين',
     category: 'emiratisation',
     urgent: true,
+    sourceUrl: 'https://www.mohre.gov.ae/en/services/establishments-services/emiratisation.aspx',
+    sourceLabel: 'mohre.gov.ae',
   },
   {
     date: '2026-07-01',
@@ -48,6 +50,8 @@ export const KEY_DEADLINES = [
     titleAr: 'الفاتورة الإلكترونية - مرحلة تجريبية',
     category: 'tax',
     urgent: false,
+    sourceUrl: 'https://tax.gov.ae/en/taxes/einvoicing.aspx',
+    sourceLabel: 'tax.gov.ae',
   },
   {
     date: '2026-10-31',
@@ -55,6 +59,8 @@ export const KEY_DEADLINES = [
     titleAr: 'تعيين مزود خدمة الفاتورة الإلكترونية',
     category: 'tax',
     urgent: false,
+    sourceUrl: 'https://tax.gov.ae/en/taxes/einvoicing.aspx',
+    sourceLabel: 'tax.gov.ae',
   },
   {
     date: '2026-12-31',
@@ -62,6 +68,8 @@ export const KEY_DEADLINES = [
     titleAr: 'تدقيق التصديق للتوطين',
     category: 'emiratisation',
     urgent: true,
+    sourceUrl: 'https://www.mohre.gov.ae/en/services/establishments-services/emiratisation.aspx',
+    sourceLabel: 'mohre.gov.ae',
   },
   {
     date: '2027-01-01',
@@ -69,6 +77,8 @@ export const KEY_DEADLINES = [
     titleAr: 'إلزامية الفاتورة الإلكترونية - الشركات الكبيرة',
     category: 'tax',
     urgent: false,
+    sourceUrl: 'https://tax.gov.ae/en/taxes/einvoicing.aspx',
+    sourceLabel: 'tax.gov.ae',
   },
   {
     date: '2027-03-31',
@@ -76,6 +86,8 @@ export const KEY_DEADLINES = [
     titleAr: 'تعيين مزود خدمة الفاتورة الإلكترونية - المنشآت الصغيرة',
     category: 'tax',
     urgent: false,
+    sourceUrl: 'https://tax.gov.ae/en/taxes/einvoicing.aspx',
+    sourceLabel: 'tax.gov.ae',
   },
   {
     date: '2027-07-01',
@@ -83,6 +95,8 @@ export const KEY_DEADLINES = [
     titleAr: 'إلزامية الفاتورة الإلكترونية - جميع المنشآت',
     category: 'tax',
     urgent: false,
+    sourceUrl: 'https://tax.gov.ae/en/taxes/einvoicing.aspx',
+    sourceLabel: 'tax.gov.ae',
   },
 ] as const;
 

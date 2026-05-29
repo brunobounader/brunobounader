@@ -2,7 +2,7 @@
 
 import { useMemo } from 'react';
 import Link from 'next/link';
-import { Calendar, ArrowLeft, AlertTriangle, FileText, Clock } from 'lucide-react';
+import { Calendar, ArrowLeft, AlertTriangle, FileText, Clock, ExternalLink } from 'lucide-react';
 import { KEY_DEADLINES } from '@/lib/constants';
 import { getDaysUntil } from '@/lib/emiratisation';
 import Disclaimer from '@/components/Disclaimer';
@@ -136,6 +136,15 @@ export default function DeadlinesPage() {
                       <Clock className="w-3 h-3" />
                       {dl.formatted}
                     </div>
+                    <a
+                      href={dl.sourceUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 mt-2 text-xs text-[#C9A84C]/60 hover:text-[#C9A84C] transition-colors"
+                    >
+                      <ExternalLink className="w-3 h-3" />
+                      Official source: {dl.sourceLabel}
+                    </a>
                   </div>
                   <div className="text-right flex-shrink-0">
                     <div className={`text-3xl font-bold ${urgStyle.days}`}>
@@ -184,6 +193,15 @@ export default function DeadlinesPage() {
                       <Clock className="w-3 h-3" />
                       {dl.formatted}
                     </div>
+                    <a
+                      href={dl.sourceUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 mt-2 text-xs text-[#C9A84C]/60 hover:text-[#C9A84C] transition-colors"
+                    >
+                      <ExternalLink className="w-3 h-3" />
+                      Official source: {dl.sourceLabel}
+                    </a>
                   </div>
                   <div className="text-right flex-shrink-0">
                     <div className={`text-3xl font-bold ${urgStyle.days}`}>
