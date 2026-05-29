@@ -9,6 +9,7 @@ const navLinks = [
   { href: '/calculator', label: 'Calculator', labelAr: 'الحاسبة' },
   { href: '/action-plan', label: 'Action Plan', labelAr: 'خطة العمل' },
   { href: '/deadlines', label: 'Deadlines', labelAr: 'المواعيد النهائية' },
+  { href: '/talent', label: 'Find Talent', labelAr: 'ابحث عن كفاءات' },
 ];
 
 export default function Navbar() {
