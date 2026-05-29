@@ -270,7 +270,7 @@ export default function OnboardingPage() {
               <label className="block text-sm font-medium text-gray-300 mb-1">
                 Planned Hire Education Level{' '}
                 <span className="text-gray-500 text-xs">
-                  (for Nafis subsidy calculation | لحساب دعم نافس)
+                  (Nafis pays this top-up directly to your Emirati hire | نافس يدفع هذا الدعم للموظف مباشرةً)
                 </span>
               </label>
               <div className="grid grid-cols-2 gap-3">
@@ -279,13 +279,13 @@ export default function OnboardingPage() {
                     value: 'bachelor',
                     label: "Bachelor's Degree",
                     labelAr: 'بكالوريوس',
-                    subsidy: 'AED 8,000/mo',
+                    subsidy: 'Govt. top-up to hire: AED 8,000/mo',
                   },
                   {
                     value: 'diploma',
                     label: 'Diploma',
                     labelAr: 'دبلوم',
-                    subsidy: 'AED 7,000/mo',
+                    subsidy: 'Govt. top-up to hire: AED 7,000/mo',
                   },
                 ].map((opt) => (
                   <label key={opt.value} className="relative cursor-pointer">

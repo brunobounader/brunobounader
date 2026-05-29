@@ -51,15 +51,15 @@ function buildChartData(profile: CompanyProfile, hires: number): ScenarioData[] 
 function buildMetrics(
   profile: CompanyProfile,
   hires: number
-): { penaltyAvoided: number; subsidyGained: number; netPosition: number } {
+): { penaltyAvoided: number; nafisToEmployee: number; netPosition: number } {
   const status = getComplianceStatus(profile);
-  const proj = getPenaltyProjection(profile);
   const newGap = Math.max(0, status.gap - hires);
   const hiresPerMonthNafis = profile.educationLevel === 'bachelor' ? 8000 : 7000;
-  const penalty = (status.gap - newGap) * 9000 * 12;
-  const subsidy = hires * hiresPerMonthNafis * 12;
-  const net = subsidy - proj.annualPenalty + newGap * 9000 * 12;
-  return { penaltyAvoided: Math.max(0, penalty), subsidyGained: subsidy, netPosition: net };
+  const penaltyAvoided = Math.max(0, (status.gap - newGap) * 9000 * 12);
+  const nafisToEmployee = hires * hiresPerMonthNafis * 12; // paid by govt to employee, not company
+  const hiringCost = hires * 60000;
+  const net = penaltyAvoided - hiringCost; // actual company financial impact
+  return { penaltyAvoided, nafisToEmployee, netPosition: net };
 }
 
 export default function CalculatorPage() {
@@ -92,7 +92,7 @@ export default function CalculatorPage() {
     () =>
       profile
         ? buildMetrics(profile, additionalHires)
-        : { penaltyAvoided: 0, subsidyGained: 0, netPosition: 0 },
+        : { penaltyAvoided: 0, nafisToEmployee: 0, netPosition: 0 },
     [profile, additionalHires]
   );
 
@@ -108,7 +108,7 @@ export default function CalculatorPage() {
     );
   }
 
-  const { penaltyAvoided, subsidyGained, netPosition } = metrics;
+  const { penaltyAvoided, nafisToEmployee, netPosition } = metrics;
 
   return (
     <div className="min-h-screen bg-[#0A1628] px-4 py-8">
@@ -189,10 +189,10 @@ export default function CalculatorPage() {
           <div className="p-5 rounded-xl border border-blue-500/20 bg-blue-500/5">
             <div className="flex items-center gap-2 mb-2">
               <TrendingUp className="w-4 h-4 text-blue-400" />
-              <p className="text-xs text-gray-400">Nafis Subsidy | دعم نافس</p>
+              <p className="text-xs text-gray-400">Nafis Govt. Top-Up to Employee | دعم نافس للموظف</p>
             </div>
-            <p className="text-2xl font-bold text-blue-400">{formatAED(subsidyGained)}</p>
-            <p className="text-xs text-gray-600 mt-1">annually ({additionalHires} hires)</p>
+            <p className="text-2xl font-bold text-blue-400">{formatAED(nafisToEmployee)}</p>
+            <p className="text-xs text-gray-600 mt-1">govt. pays your {additionalHires} hire{additionalHires !== 1 ? 's' : ''} directly</p>
           </div>
 
           <div
@@ -214,7 +214,7 @@ export default function CalculatorPage() {
               {netPosition >= 0 ? '+' : ''}
               {formatAED(netPosition)}
             </p>
-            <p className="text-xs text-gray-600 mt-1">subsidy - remaining penalty</p>
+            <p className="text-xs text-gray-600 mt-1">penalty avoided minus hiring cost</p>
           </div>
         </div>
 
@@ -282,25 +282,23 @@ export default function CalculatorPage() {
                 <span className="text-white">{formatAED(additionalHires * 60000)}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-400">Nafis subsidy (annual)</span>
-                <span className="text-emerald-400">- {formatAED(subsidyGained)}</span>
+                <span className="text-gray-400">Nafis top-up (govt. pays employee directly)</span>
+                <span className="text-blue-400">{formatAED(nafisToEmployee)}/yr to hire</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-400">Penalty avoided (annual)</span>
                 <span className="text-emerald-400">- {formatAED(penaltyAvoided)}</span>
               </div>
               <div className="border-t border-white/10 pt-2 flex justify-between font-semibold">
-                <span className="text-gray-300">Net effective cost (Year 1)</span>
+                <span className="text-gray-300">Net cost to company (Year 1)</span>
                 <span
                   className={
-                    additionalHires * 60000 - subsidyGained - penaltyAvoided < 0
+                    additionalHires * 60000 - penaltyAvoided < 0
                       ? 'text-emerald-400'
                       : 'text-white'
                   }
                 >
-                  {formatAED(
-                    Math.max(0, additionalHires * 60000 - subsidyGained - penaltyAvoided)
-                  )}
+                  {formatAED(Math.max(0, additionalHires * 60000 - penaltyAvoided))}
                 </span>
               </div>
             </div>
