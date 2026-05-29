@@ -58,8 +58,8 @@ const NAFIS_STEPS = [
     titleAr: 'تسجيل التوظيف في وزارة الموارد البشرية',
     description:
       'After hiring, update your establishment\'s headcount on the MOHRE Tasdeeq portal. This registers the new Emirati employee against your Emiratisation quota and counts toward your compliance target.',
-    action: 'MOHRE Tasdeeq → Update Headcount',
-    url: 'https://tasdeeq.mohre.gov.ae',
+    action: 'MOHRE eServices → Update Headcount',
+    url: 'https://eservices.mohre.gov.ae/TasheelWeb/account/login',
   },
 ];
 
@@ -88,7 +88,7 @@ const TALENT_PLATFORMS = [
     description: 'Post graduate and entry-level roles directly to UAE national university graduates. Good source for Bachelor\'s-level Emirati talent.',
     tag: 'Graduate Talent',
     tagColor: 'bg-purple-500/20 text-purple-400 border border-purple-500/30',
-    url: 'https://www.uaeu.ac.ae/en/careers/',
+    url: 'https://www.uaeu.ac.ae/en/dvcsae/student_career/career_form.shtml',
     icon: '🎓',
   },
   {
