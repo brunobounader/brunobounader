@@ -7,6 +7,8 @@ import {
   AUDIT_DATES,
 } from './constants';
 
+export { PENALTY_PER_MONTH };
+
 export function getRequiredEmiratis(profile: CompanyProfile): number {
   if (profile.entityType === 'freezone') return 0;
   if (profile.companySize === '20-49') return 1;
