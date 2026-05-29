@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import {
@@ -36,59 +36,71 @@ function loadProfile(): CompanyProfile | null {
   return JSON.parse(stored) as CompanyProfile;
 }
 
+function buildChartData(profile: CompanyProfile, hires: number): ScenarioData[] {
+  const status = getComplianceStatus(profile);
+  const currentGapData: MonthlyData[] = getMonthlyPenaltyData(status.gap, 12);
+  const newGap = Math.max(0, status.gap - hires);
+  const newGapData: MonthlyData[] = getMonthlyPenaltyData(newGap, 12);
+  return currentGapData.map((d, i) => ({
+    month: d.month,
+    currentGap: d.cumulative,
+    withHires: newGapData[i].cumulative,
+  }));
+}
+
+function buildMetrics(
+  profile: CompanyProfile,
+  hires: number
+): { penaltyAvoided: number; subsidyGained: number; netPosition: number } {
+  const status = getComplianceStatus(profile);
+  const proj = getPenaltyProjection(profile);
+  const newGap = Math.max(0, status.gap - hires);
+  const hiresPerMonthNafis = profile.educationLevel === 'bachelor' ? 8000 : 7000;
+  const penalty = (status.gap - newGap) * 9000 * 12;
+  const subsidy = hires * hiresPerMonthNafis * 12;
+  const net = subsidy - proj.annualPenalty + newGap * 9000 * 12;
+  return { penaltyAvoided: Math.max(0, penalty), subsidyGained: subsidy, netPosition: net };
+}
+
 export default function CalculatorPage() {
   const router = useRouter();
   const [profile] = useState<CompanyProfile | null>(() => loadProfile());
   const [additionalHires, setAdditionalHires] = useState(0);
-  const [maxHires, setMaxHires] = useState(10);
-  const [chartData, setChartData] = useState<ScenarioData[]>([]);
-  const [penaltyAvoided, setPenaltyAvoided] = useState(0);
-  const [subsidyGained, setSubsidyGained] = useState(0);
-  const [netPosition, setNetPosition] = useState(0);
-
-  const recalculate = useCallback((p: CompanyProfile, hires: number) => {
-    const status = getComplianceStatus(p);
-    const currentGapData: MonthlyData[] = getMonthlyPenaltyData(status.gap, 12);
-
-    const newGap = Math.max(0, status.gap - hires);
-    const newGapData: MonthlyData[] = getMonthlyPenaltyData(newGap, 12);
-
-    const combined: ScenarioData[] = currentGapData.map((d, i) => ({
-      month: d.month,
-      currentGap: d.cumulative,
-      withHires: newGapData[i].cumulative,
-    }));
-    setChartData(combined);
-
-    const proj = getPenaltyProjection(p);
-    const hiresPerMonthNafis = p.educationLevel === 'bachelor' ? 8000 : 7000;
-
-    const penalty = (status.gap - newGap) * 9000 * 12;
-    const subsidy = hires * hiresPerMonthNafis * 12;
-    const net = subsidy - proj.annualPenalty + newGap * 9000 * 12;
-
-    setPenaltyAvoided(Math.max(0, penalty));
-    setSubsidyGained(subsidy);
-    setNetPosition(net);
-  }, []);
 
   useEffect(() => {
     if (!profile) {
       router.push('/');
-      return;
     }
-    const status = getComplianceStatus(profile);
-    setMaxHires(Math.max(10, status.gap + 5));
-    recalculate(profile, 0);
-  }, [profile, router, recalculate]);
+  }, [profile, router]);
 
-  const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const val = parseInt(e.target.value, 10);
-    setAdditionalHires(val);
-    if (profile) recalculate(profile, val);
-  };
+  const status = useMemo(
+    () => (profile ? getComplianceStatus(profile) : null),
+    [profile]
+  );
 
-  if (!profile) {
+  const maxHires = useMemo(
+    () => (status ? Math.max(10, status.gap + 5) : 10),
+    [status]
+  );
+
+  const chartData = useMemo(
+    () => (profile ? buildChartData(profile, additionalHires) : []),
+    [profile, additionalHires]
+  );
+
+  const metrics = useMemo(
+    () =>
+      profile
+        ? buildMetrics(profile, additionalHires)
+        : { penaltyAvoided: 0, subsidyGained: 0, netPosition: 0 },
+    [profile, additionalHires]
+  );
+
+  const handleSliderChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setAdditionalHires(parseInt(e.target.value, 10));
+  }, []);
+
+  if (!profile || !status) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-gray-400">Loading...</div>
@@ -96,7 +108,7 @@ export default function CalculatorPage() {
     );
   }
 
-  const status = getComplianceStatus(profile);
+  const { penaltyAvoided, subsidyGained, netPosition } = metrics;
 
   return (
     <div className="min-h-screen bg-[#0A1628] px-4 py-8">
